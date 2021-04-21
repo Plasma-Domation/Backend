@@ -1,7 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('./middlewares/cors');
-const morgan = require('morgan');
 const session = require('./middlewares/session');
 // Custom imports
 require('dotenv').config({ path: './config/config.env' });
@@ -27,13 +26,6 @@ app.use(function(req, res, next) {
     next();
 });
 app.use(session);
-if (process.env.NODE_ENV === 'production') {
-  app.set('trust proxy', 1);
-  session.cookie.secure = true;
-}
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
-}
 
 // PORT for app
 PORT = process.env.PORT || 5000;
