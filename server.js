@@ -42,7 +42,9 @@ app.use('/api/post', postRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/pincode_check', pincode_check);
-
+app.use('/', (req, res, next) => {
+  res.status(200).send("Well connected")
+})
 // if not in our domain routes
 app.use((req, res, next) => {
   next(ApiError.NotFound('No route to this site'))
