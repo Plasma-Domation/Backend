@@ -1,5 +1,5 @@
 const User = require('../models/userModel');
-const Post = require('../models/PostModel');
+const Post = require('../models/postModel');
 const ApiError = require('../Errorhandler/APIerror');
 const { validationResult } = require('express-validator');
 

@@ -1,5 +1,5 @@
-const Post = require('../models/PostModel');
-const { Blood, Genders } = require('../models/PostModel');
+const Post = require('../models/postModel');
+const { Blood, Genders } = require('../models/postModel');
 const { validationResult } = require('express-validator');
 const ApiError = require('../Errorhandler/APIerror');
 const User = require('../models/userModel');
