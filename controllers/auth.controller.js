@@ -95,15 +95,13 @@ module.exports.signUp = async (req, res, next) => {
         contactNumber,
       });
       req.session.user = newUser;
-      return res
-        .status(201)
-        .json({
-          user: {
-            firstName: newUser.firstName,
-            lastName: newUser.lastName,
-            _id: newUser._id,
-          },
-        });
+      return res.status(201).json({
+        user: {
+          firstName: newUser.firstName,
+          lastName: newUser.lastName,
+          _id: newUser._id,
+        },
+      });
     }
   } catch (error) {
     console.log(error);
@@ -123,8 +121,8 @@ module.exports.login_post = async (req, res, next) => {
       return;
     } else {
       const user = await User.findOne({ email })
-        .lean()
-        .select('firstName', 'lastName');
+        .select('firstName lastName')
+        .lean();
       if (!user) {
         next(ApiError.badRequest('Invalid credentials'));
         return;
