@@ -95,7 +95,15 @@ module.exports.signUp = async (req, res, next) => {
         contactNumber,
       });
       req.session.user = newUser;
-      return res.status(201).json(newUser);
+      return res
+        .status(201)
+        .json({
+          user: {
+            firstName: newUser.firstName,
+            lastName: newUser.lastName,
+            _id: newUser._id,
+          },
+        });
     }
   } catch (error) {
     console.log(error);
@@ -114,7 +122,9 @@ module.exports.login_post = async (req, res, next) => {
       next(new ApiError(422, firstError));
       return;
     } else {
-      const user = await User.findOne({ email }).lean();
+      const user = await User.findOne({ email })
+        .lean()
+        .select('firstName', 'lastName');
       if (!user) {
         next(ApiError.badRequest('Invalid credentials'));
         return;
@@ -139,16 +149,15 @@ module.exports.logout_delete = (req, res, next) => {
   });
 };
 
-
-module.exports.checkSession = (req, res,next)=> {
-  if(req.session.user){
+module.exports.checkSession = (req, res, next) => {
+  if (req.session.user) {
     return res.status(200).json({
       auth: true,
-      message: "User signned"
-    })
+      message: 'User signned',
+    });
   }
   return res.status(200).json({
     auth: false,
-    message: "User not signned"
-  })
-}
+    message: 'User not signned',
+  });
+};
