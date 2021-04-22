@@ -1,13 +1,12 @@
 const express = require('express');
 const helmet = require('helmet');
-const cors = require('./middlewares/cors');
+const cors = require('cors');
 const session = require('./middlewares/session');
 // Custom imports
 require('dotenv').config({ path: './config/config.env' });
 require('./config/MongoDB');
 const ApiError = require('./Errorhandler/APIerror');
 const apiErrorHandler = require('./middlewares/api_error_handling');
-
 
 // APP
 const app = express();
@@ -16,14 +15,23 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
-app.options('*', cors);
-app.use(cors);
-app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Credentials', true);
-    res.header('Access-Control-Allow-Origin', req.headers.origin);
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
-    next();
+// app.options('*', cors);
+app.use(
+  cors({
+    origin: ['http://localhost:3000', 'https://stupefied-golick-e86c7b.netlify.app'],
+    credentials: true,
+    exposedHeaders: ['set-cookie'],
+  })
+);
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
+  );
+  next();
 });
 app.use(session);
 
@@ -43,10 +51,10 @@ app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/pincode_check', pincode_check);
 app.use('/', (req, res, next) => {
-  res.status(200).send("Well connected")
-})
+  res.status(200).send('Well connected');
+});
 // if not in our domain routes
 app.use((req, res, next) => {
-  next(ApiError.NotFound('No route to this site'))
+  next(ApiError.NotFound('No route to this site'));
 });
 app.use(apiErrorHandler);

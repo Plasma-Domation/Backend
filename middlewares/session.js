@@ -29,14 +29,14 @@ module.exports = session({
   secret: process.env.SESSION_SECRET,
   saveUninitialized: false,
   resave: true,
+  unset: 'destroy',
   name: 'sessionId',
-      // unset: 'destroy',
   cookie: {
     secure: false, // if true: only transmit cookie over https
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 7,
     sameSite: false,
-      // path: '/',
+      path: '/',
       // domain: 'sitename.com'
   },
 });
