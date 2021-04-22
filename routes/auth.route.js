@@ -13,6 +13,7 @@ const {
   signUp,
   login_post,
   logout_delete,
+  checkSession,
 } = require('../controllers/auth.controller');
 const { RequireLogin, verifyotp } = require('../middlewares/authMiddleware');
 
@@ -21,5 +22,5 @@ router.post('/sendotp', validSendOTP, sendOTP);
 router.post('/create', validSign, verifyotp, signUp);
 router.post('/login', validLogin, verifyotp, login_post);
 router.delete('/logout', RequireLogin, logout_delete);
-
+router.get('/checksession', checkSession);
 module.exports = router;

@@ -5,6 +5,7 @@ const { validationResult } = require('express-validator');
 const nodemailer = require('nodemailer');
 const { google } = require('googleapis');
 const { errorHandler } = require('../Errorhandler/authErrorHandling');
+const { json } = require('express');
 
 module.exports.sendOTP = async (req, res, next) => {
   try {
@@ -114,7 +115,6 @@ module.exports.login_post = async (req, res, next) => {
       return;
     } else {
       const user = await User.findOne({ email }).lean();
-      console.log(user);
       if (!user) {
         next(ApiError.badRequest('Invalid credentials'));
         return;
@@ -138,3 +138,17 @@ module.exports.logout_delete = (req, res, next) => {
     }
   });
 };
+
+
+module.exports.checkSession = (req, res,next)=> {
+  if(req.session.user){
+    return res.status(200).json({
+      auth: true,
+      message: "User signned"
+    })
+  }
+  return res.status(200).json({
+    auth: false,
+    message: "User not signned"
+  })
+}
