@@ -153,11 +153,11 @@ module.exports.checkSession = (req, res, next) => {
   if (req.session.user) {
     return res.status(200).json({
       auth: true,
-      message: 'User signned',
+      user: req.session.user,
     });
   }
   return res.status(200).json({
     auth: false,
-    message: 'User not signned',
+    error: 'User not signned',
   });
 };
