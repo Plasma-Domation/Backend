@@ -19,7 +19,7 @@ const { RequireLogin, verifyotp } = require('../middlewares/authMiddleware');
 
 // actual routes
 router.post('/sendotp', validSendOTP, sendOTP);
-router.post('/create', validSign, verifyotp, signUp);
+router.post('/signup', validSign, verifyotp, signUp);
 router.post('/login', validLogin, verifyotp, login_post);
 router.delete('/logout', RequireLogin, logout_delete);
 router.get('/checksession', checkSession);
