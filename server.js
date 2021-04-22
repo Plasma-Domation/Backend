@@ -17,11 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 // app.options('*', cors);
 app.use(
-  cors({
-    origin: ['http://localhost:3000', 'https://stupefied-golick-e86c7b.netlify.app'],
-    credentials: true,
-    exposedHeaders: ['set-cookie'],
-  })
+  cors()
 );
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Credentials', true);
