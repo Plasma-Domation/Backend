@@ -58,18 +58,18 @@ module.exports.sendOTP = async (req, res, next) => {
         html: `<h1>Your OTP is: ${otpToSend}</h1>`,
       };
 
-      // transport.sendMail(mailOptions, function (error, info) {
-      //   if (error) {
-      //     console.log(error);
-      //     return res.status(400).json(error);
-      //   } else {
-      //     console.log('Email sent: ' + info.response);
-      //     res.status(200).send('Email sent: ' + info.response);
-      //   }
-      // });
+      transport.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+          return res.status(400).json(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+          res.status(200).send('Email sent: ' + info.response);
+        }
+      });
 
-      res.status(201).send(otpToSend);
-      // res.status(201).json({Message: "Email sent!!"});
+      // res.status(201).send(otpToSend);
+      res.status(201).json({Message: "Email sent!!"});
     }
   } catch (err) {
     console.log(error);

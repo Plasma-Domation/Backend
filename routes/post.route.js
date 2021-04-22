@@ -21,7 +21,7 @@ const { RequireLogin, verifyotp } = require('../middlewares/authMiddleware');
 // actual routes
 router.get('/list', PostList);
 router.get('/detail/:id', RequireLogin, PostDetail);
-router.post('/create', validCreate, verifyotp, PostCreate);
+router.post('/create', validCreate,verifyotp, PostCreate);
 router.post('/report/:id', RequireLogin, PostReport);
 
 router.put('/update', validUpdate, RequireLogin, PostUpdate);
