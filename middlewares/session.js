@@ -37,6 +37,6 @@ module.exports = session({
     maxAge: 1000 * 60 * 60 * 24 * 7,
     sameSite: false,
       path: '/',
-      // domain: 'sitename.com'
+      domain: ['sitename.com',"stupefied-golick-e86c7b.netlify.app/" ]
   },
 });
