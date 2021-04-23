@@ -9,7 +9,7 @@ module.exports.PostList = async (req, res, next) => {
   const page = parseInt(req.query.page);
   const limit = parseInt(req.query.limit);
   const startIndex = (page - 1) * limit;
-  const endIndex = page * limit;
+  // const endIndex = page * limit;
   const results = {};
 
   var obj = { $and: [] };
@@ -42,18 +42,20 @@ module.exports.PostList = async (req, res, next) => {
       .lean()
       .exec();
 
-    if (endIndex < (await Post.find(obj).countDocuments().exec()))
-      results.next = {
-        page: page + 1,
-        limit: limit,
-      };
+    // if (endIndex < (await Post.find(obj).countDocuments().exec()))
+    //   results.next = {
+    //     page: page + 1,
+    //     limit: limit,
+    //   };
 
-    if (startIndex > 0) {
-      results.previous = {
-        page: page - 1,
-        limit: limit,
-      };
-    }
+    // if (startIndex > 0) {
+    //   results.previous = {
+    //     page: page - 1,
+    //     limit: limit,
+    //   };
+    // }
+
+    results.totalPages =  Math.ceil( await Post.find(obj).countDocuments().exec() / limit)
     results.results = posts;
 
     return res.status(200).json(results);
