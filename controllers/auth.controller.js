@@ -70,7 +70,7 @@ module.exports.sendOTP = async (req, res, next) => {
       // });
 
       res.status(201).send(otpToSend);
-      // res.status(201).json({Message: "Email sent!!"});
+      // res.status(201).json("Email sent!!");
     }
   } catch (err) {
     console.log(error);
@@ -147,15 +147,19 @@ module.exports.logout_delete = (req, res, next) => {
   });
 };
 
-module.exports.checkSession = (req, res, next) => {
-  if (req.session.user) {
+module.exports.checkSession = async (req, res, next) => {
+  try {
+    if (req.session.user) {
+      return res.status(200).json({
+        auth: true,
+        user: req.session.user,
+      });
+    }
     return res.status(200).json({
-      auth: true,
-      user: req.session.user,
+      auth: false,
+      error: 'User not signned',
     });
+  } catch (e) {
+    return next(ApiError.InternalServerError('Server down'));
   }
-  return res.status(200).json({
-    auth: false,
-    error: 'User not signned',
-  });
 };

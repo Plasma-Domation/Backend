@@ -38,7 +38,7 @@ module.exports.PostList = async (req, res, next) => {
     const posts = await Post.find(obj)
       .limit(limit)
       .skip(startIndex)
-      .populate('author', "_id firstName lastName")
+      .populate('author', '_id firstName lastName')
       .lean()
       .exec();
 
@@ -55,7 +55,9 @@ module.exports.PostList = async (req, res, next) => {
     //   };
     // }
 
-    results.totalPages =  Math.ceil( await Post.find(obj).countDocuments().exec() / limit)
+    results.totalPages = Math.ceil(
+      (await Post.find(obj).countDocuments().exec()) / limit
+    );
     results.results = posts;
 
     return res.status(200).json(results);
