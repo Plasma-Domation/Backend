@@ -194,14 +194,12 @@ module.exports.PostDetail = async (req, res, next) => {
   try {
     const postID = req.params.id;
     const post = await Post.findById(postID).populate('author').lean();
-    console.log(post);
-    if (!post) {
-      return next(ApiError.NotFound('No post found'));
-    } else {
-      return res.status(200).json(post);
-    }
+    return res.status(200).json(post);
   } catch (error) {
-    console.log(error);
+    console.log(error.path);
+    if (error.path === "_id") {
+      return next(ApiError.NotFound('No post found'));
+    } 
     return next(ApiError.InternalServerError('Something went wrong'));
   }
 };
