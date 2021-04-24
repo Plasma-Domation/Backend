@@ -24,22 +24,15 @@ const DestroySession = async (req, res, next) => {
 const verifyotp = async (req, res, next) => {
   try {
     const { email, otp } = req.body;
-    console.log(email, otp);
-
-    if (!email || !otp) {
-      return res.status(400).send('send otp and email again');
+    const obj = await OTP.findOne({ email });
+    if (!obj) {
+      return res.status(400).send('otp unverifed');
     } else {
-      const obj = await OTP.findOne({ email });
-      console.log(obj);
-      if (!obj) {
+      if (obj.otp != otp) {
         return res.status(400).send('otp unverifed');
       } else {
-        if (obj.otp != otp) {
-          return res.status(400).send('otp unverifed');
-        } else {
-          obj.delete();
-          next();
-        }
+        obj.delete();
+        next();
       }
     }
   } catch (error) {
@@ -48,4 +41,4 @@ const verifyotp = async (req, res, next) => {
   }
 };
 
-module.exports = { RequireLogin, verifyotp,DestroySession };
+module.exports = { RequireLogin, verifyotp, DestroySession };
