@@ -12,14 +12,6 @@ const RequireLogin = async (req, res, next) => {
   }
 };
 
-const DestroySession = async (req, res, next) => {
-  if (req.session) {
-    await req.session.destroy();
-    next();
-  } else {
-    next();
-  }
-};
 
 const verifyotp = async (req, res, next) => {
   try {
@@ -41,4 +33,4 @@ const verifyotp = async (req, res, next) => {
   }
 };
 
-module.exports = { RequireLogin, verifyotp, DestroySession };
+module.exports = { RequireLogin, verifyotp };

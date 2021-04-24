@@ -105,7 +105,7 @@ module.exports.signUp = async (req, res, next) => {
     }
   } catch (error) {
     console.log(error);
-    return res.status(400).json(errorHandler(error));
+    return next(ApiError.InternalServerError('Failed to Signup'));
   }
 };
 
