@@ -5,7 +5,7 @@ const { validationResult } = require('express-validator');
 const nodemailer = require('nodemailer');
 const { google } = require('googleapis');
 const { errorHandler } = require('../Errorhandler/authErrorHandling');
-
+const { json } = require('express');
 
 module.exports.sendOTP = async (req, res, next) => {
   try {
@@ -31,33 +31,33 @@ module.exports.sendOTP = async (req, res, next) => {
         });
         otpToSend = newOTPobj.otp;
       }
-      const oAuth2Client = new google.auth.OAuth2(
-        process.env.CLIENT_ID,
-        process.env.CLEINT_SECRET,
-        process.env.REDIRECT_URI
-      );
-      oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
-      const accessToken = await oAuth2Client.getAccessToken();
+      // const oAuth2Client = new google.auth.OAuth2(
+      //   process.env.CLIENT_ID,
+      //   process.env.CLEINT_SECRET,
+      //   process.env.REDIRECT_URI
+      // );
+      // oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
+      // const accessToken = await oAuth2Client.getAccessToken();
 
-      const transport = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          type: 'OAuth2',
-          user: process.env.EMAIL_FROM,
-          clientId: process.env.CLIENT_ID,
-          clientSecret: process.env.CLEINT_SECRET,
-          refreshToken: process.env.REFRESH_TOKEN,
-          accessToken: accessToken,
-        },
-      });
+      // const transport = nodemailer.createTransport({
+      //   service: 'gmail',
+      //   auth: {
+      //     type: 'OAuth2',
+      //     user: process.env.EMAIL_FROM,
+      //     clientId: process.env.CLIENT_ID,
+      //     clientSecret: process.env.CLEINT_SECRET,
+      //     refreshToken: process.env.REFRESH_TOKEN,
+      //     accessToken: accessToken,
+      //   },
+      // });
 
-      const mailOptions = {
-        from: `Plasma Donation 🧁 <${process.env.EMAIL_FROM}>`,
-        to: `${email}`,
-        subject: 'Get your email verified',
-        text: `Your OTP is: ${otpToSend}`,
-        html: `<h1>Your OTP is: ${otpToSend}</h1>`,
-      };
+      // const mailOptions = {
+      //   from: `Plasma Donation 🧁 <${process.env.EMAIL_FROM}>`,
+      //   to: `${email}`,
+      //   subject: 'Get your email verified',
+      //   text: `Your OTP is: ${otpToSend}`,
+      //   html: `<h1>Your OTP is: ${otpToSend}</h1>`,
+      // };
 
       // transport.sendMail(mailOptions, function (error, info) {
       //   if (error) {
@@ -73,7 +73,7 @@ module.exports.sendOTP = async (req, res, next) => {
       // res.status(201).json("Email sent!!");
     }
   } catch (err) {
-    console.log(error);
+    console.log(err);
     return next(ApiError.InternalServerError('Failed to send Email'));
   }
 };
