@@ -221,7 +221,7 @@ module.exports.PostDelete = async (req, res, next) => {
       } else {
         if (post.author.toString() == req.session.user._id.toString()) {
           await post.delete();
-          return res.status(204).json(post);
+          return res.status(204).json(post._id);
         } else {
           return next(
             ApiError.Forbidden('Only author of the post can delete the post')
