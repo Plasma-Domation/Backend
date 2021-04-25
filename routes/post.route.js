@@ -15,6 +15,7 @@ const {
   PostReport,
   PostUpdate,
   PostDelete,
+  UserPosts
 } = require('../controllers/post.controller');
 const { RequireLogin, verifyotp } = require('../middlewares/authMiddleware');
 
@@ -26,5 +27,7 @@ router.post('/report/:id', RequireLogin, PostReport);
 
 router.put('/update', validUpdate, RequireLogin, PostUpdate);
 router.delete('/delete', validDelete, RequireLogin, PostDelete);
+
+router.get('/userposts', UserPosts)
 
 module.exports = router;

@@ -197,9 +197,9 @@ module.exports.PostDetail = async (req, res, next) => {
     return res.status(200).json(post);
   } catch (error) {
     console.log(error.path);
-    if (error.path === "_id") {
+    if (error.path === '_id') {
       return next(ApiError.NotFound('No post found'));
-    } 
+    }
     return next(ApiError.InternalServerError('Something went wrong'));
   }
 };
@@ -286,6 +286,17 @@ module.exports.PostUpdate = async (req, res, next) => {
         }
       }
     }
+  } catch (error) {
+    return next(ApiError.InternalServerError('Something went wrong'));
+  }
+};
+
+module.exports.UserPosts = async (req, res, next) => {
+  try {
+    console.log(req.session.user);
+    const userPosts = await Post.find({author: req.session.user._id}).lean()
+    console.log(userPosts);
+    res.status(200).json(userPosts)
   } catch (error) {
     return next(ApiError.InternalServerError('Something went wrong'));
   }
