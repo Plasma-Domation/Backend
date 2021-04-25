@@ -55,12 +55,7 @@ exports.validCreate = [
     .withMessage('Must be a valid email address'),
 ];
 
-exports.validDelete = [
-  check('postID', 'Enter post id').notEmpty().withMessage('Invaid postID'),
-];
-
 exports.validUpdate = [
-  check('postID', 'Enter post id').notEmpty().withMessage('Invaid postID'),
   check('City', 'City is required').optional().isAlpha().isLength({
     max: 55,
   }),

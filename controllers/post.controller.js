@@ -207,26 +207,19 @@ module.exports.PostDetail = async (req, res, next) => {
 module.exports.PostDelete = async (req, res, next) => {
   try {
     const { postID } = req.body;
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      const firstError = errors
-        .array()
-        .map(error => ({ [error.param]: error.msg }));
-      return next(new ApiError(422, firstError));
+
+    const post = await Post.findById(postID);
+    if (!post) {
+      next(ApiError.NotFound('No post found'));
+      return;
     } else {
-      const post = await Post.findById(postID);
-      if (!post) {
-        next(ApiError.NotFound('No post found'));
-        return;
+      if (post.author.toString() == req.session.user._id.toString()) {
+        await post.delete();
+        return res.status(202).send(post._id);
       } else {
-        if (post.author.toString() == req.session.user._id.toString()) {
-          await post.delete();
-          return res.status(202).send(post._id);
-        } else {
-          return next(
-            ApiError.Forbidden('Only author of the post can delete the post')
-          );
-        }
+        return next(
+          ApiError.Forbidden('Only author of the post can delete the post')
+        );
       }
     }
   } catch (error) {
@@ -294,9 +287,9 @@ module.exports.PostUpdate = async (req, res, next) => {
 module.exports.UserPosts = async (req, res, next) => {
   try {
     console.log(req.session.user);
-    const userPosts = await Post.find({author: req.session.user._id}).lean()
+    const userPosts = await Post.find({ author: req.session.user._id }).lean();
     console.log(userPosts);
-    res.status(200).json(userPosts)
+    res.status(200).json(userPosts);
   } catch (error) {
     return next(ApiError.InternalServerError('Something went wrong'));
   }

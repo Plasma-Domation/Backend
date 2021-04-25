@@ -5,7 +5,7 @@ const { validationResult } = require('express-validator');
 const nodemailer = require('nodemailer');
 const { google } = require('googleapis');
 const { errorHandler } = require('../Errorhandler/authErrorHandling');
-const { json } = require('express');
+
 
 module.exports.sendOTP = async (req, res, next) => {
   try {
