@@ -18,7 +18,7 @@ app.use(helmet());
 // app.options('*', cors);
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'https://stupefied-golick-e86c7b.netlify.app'],
+    origin: ['http://localhost:3000', 'https://ontan.netlify.app'],
     credentials: true,
     exposedHeaders: ['set-cookie'],
   })
