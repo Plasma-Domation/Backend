@@ -207,8 +207,9 @@ module.exports.PostDetail = async (req, res, next) => {
 module.exports.PostDelete = async (req, res, next) => {
   try {
     const { postID } = req.body;
-
+console.log(postID);
     const post = await Post.findById(postID);
+    console.log(post);
     if (!post) {
       next(ApiError.NotFound('No post found'));
       return;
