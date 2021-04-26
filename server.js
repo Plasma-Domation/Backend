@@ -21,7 +21,7 @@ app.set('trust proxy', 1);
 
 app.use(
   cors({
-    origin: 'ontan.netlify.app/',
+    origin: 'https://ontan.netlify.app/',
     credentials: true,
     exposedHeaders: ['set-cookie'],
   })
