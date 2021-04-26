@@ -2,26 +2,24 @@ const session = require('express-session');
 require('dotenv').config({ path: './config/config.env' });
 const MongoDBStore = require('connect-mongodb-session')(session);
 
-const store = new MongoDBStore(
-  {
-    uri: process.env.MONGODB_URI,
-    collection: 'sessions',
+const store = new MongoDBStore({
+  uri: process.env.MONGODB_URI,
+  collection: 'sessions',
 
-    expires: 1000 * 60 * 60 * 24 * 30, // by default its 2 week
-    connectionOptions: {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 10000,
-    },
-    autoReconnect:true
-  }
-);
+  expires: 1000 * 60 * 60 * 24 * 30, // by default its 2 week
+  connectionOptions: {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 10000,
+  },
+  autoReconnect: true,
+});
 
 store.on('error', function (error) {
   console.log(error);
 });
 store.on('connected', function () {
-  console.log("session connected");
+  console.log('session connected');
 });
 
 module.exports = session({
@@ -36,7 +34,7 @@ module.exports = session({
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 7,
     sameSite: 'none',
-      path: '/',
-      domain: ['localhost:3000.com',"https://ontan.netlify.app" ]
+    path: '/',
+    // domain: ['localhost:3000.com',"https://ontan.netlify.app" ]
   },
 });
