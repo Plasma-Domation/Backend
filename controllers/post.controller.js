@@ -38,7 +38,7 @@ module.exports.PostList = async (req, res, next) => {
     const posts = await Post.find(obj)
       .limit(limit)
       .skip(startIndex)
-      .populate('author', '_id firstName lastName')
+      // .populate('author', '_id')
       .lean()
       .exec();
 
@@ -94,8 +94,8 @@ module.exports.PostCreate = async (req, res, next) => {
       var theUser = await User.findOne({ email: email }).lean();
       if (theUser) {
         const userPosts = await Post.find({ author: theUser._id }).lean();
-        if (userPosts.length > 2) {
-          return next(ApiError.badRequest("Can't create more than 3 posts"));
+        if (userPosts.length > 1) {
+          return next(ApiError.badRequest("Can't create more than 2 posts"));
         }
       }
       if (!theUser) {
@@ -122,6 +122,8 @@ module.exports.PostCreate = async (req, res, next) => {
         age,
         Covid_Recovery_Date,
         author: theUser._id,
+        firstName,
+        lastName
       });
       newPost.blood_group = Blood[blood_group];
       newPost.gender = Genders[gender];
@@ -207,7 +209,7 @@ module.exports.PostDetail = async (req, res, next) => {
 module.exports.PostDelete = async (req, res, next) => {
   try {
     const { postID } = req.body;
-console.log(postID);
+    console.log(postID);
     const post = await Post.findById(postID);
     console.log(post);
     if (!post) {
@@ -288,9 +290,10 @@ module.exports.PostUpdate = async (req, res, next) => {
 module.exports.UserPosts = async (req, res, next) => {
   try {
     console.log(req.session.user);
-    const userPosts = await Post.find({ author: req.session.user._id }).populate('author', '_id firstName lastName')
-    .lean()
-    .exec();
+    const userPosts = await Post.find({ author: req.session.user._id })
+      .populate('author', '_id firstName lastName')
+      .lean()
+      .exec();
     console.log(userPosts);
     res.status(200).json(userPosts);
   } catch (error) {

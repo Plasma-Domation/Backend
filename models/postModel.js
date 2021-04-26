@@ -18,6 +18,8 @@ const Genders = Object.freeze({
 
 const postSchema = new Schema(
   {
+    firstName: { type: String, require: true },
+    lastName: { type: String, require: true },
     Location: {
       City: {
         type: String,
