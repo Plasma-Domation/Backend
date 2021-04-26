@@ -33,8 +33,8 @@ module.exports = session({
     secure: false, // if true: only transmit cookie over https
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 7,
-    sameSite: false,
+    sameSite: 'none',
     path: '/',
-    // domain: ['localhost:3000.com',"https://ontan.netlify.app" ]
+    domain: ['localhost:3000',"ontan.netlify.app" ]
   },
 });
