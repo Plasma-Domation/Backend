@@ -33,7 +33,7 @@ module.exports = session({
     secure: false, // if true: only transmit cookie over https
     // httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 7,
-    sameSite: 'strict',
+    sameSite: false,
     path: '/',
     domain: '.plasmadonationindia.herokuapp.com'
   },
