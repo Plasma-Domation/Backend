@@ -35,6 +35,6 @@ module.exports = session({
     maxAge: 1000 * 60 * 60 * 24 * 7,
     sameSite: true,
     path: '/',
-    domain: '.ontan.netlify.app/'
+    domain: '.plasmadonationindia.herokuapp.com'
   },
 });
