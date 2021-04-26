@@ -29,10 +29,11 @@ module.exports = session({
   resave: true,
   unset: 'destroy',
   name: 'sessionId',
+  proxy: true, 
   cookie: {
-    secure: false, // if true: only transmit cookie over https
+    secure: true, // if true: only transmit cookie over https
     maxAge: 1000 * 60 * 60 * 24 * 7,
-    sameSite: true,
+    sameSite: 'none',
     path: '/',
     domain: '.plasmadonationindia.herokuapp.com'
   },
