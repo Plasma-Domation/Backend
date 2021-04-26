@@ -21,7 +21,7 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'https://ontan.netlify.app'],
+    origin: ['http://localhost:3000', 'https://plasmadonationindia.netlify.app'],
     credentials: true,
     exposedHeaders: ['set-cookie'],
   })
