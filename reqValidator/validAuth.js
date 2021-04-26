@@ -2,7 +2,6 @@ const { check } = require('express-validator');
 
 exports.validSign = [
   check('firstName', 'First Name is required')
-    .notEmpty()
     .isAlpha()
     .isLength({
       min: 3,
@@ -10,7 +9,6 @@ exports.validSign = [
     })
     .withMessage('First Name must be between 3 to 32 characters'),
   check('lastName', 'Last Name is required')
-    .notEmpty()
     .isAlpha()
     .isLength({
       min: 3,
@@ -23,7 +21,6 @@ exports.validSign = [
   }).withMessage("Enter a valid phone number")
   .isMobilePhone(),
   check('otp', 'Enter OTP')
-    .notEmpty()
     .isNumeric()
     .withMessage('Invaid OTP Try again'),
   check('email').normalizeEmail().isEmail().withMessage('Must be a valid email address'),
