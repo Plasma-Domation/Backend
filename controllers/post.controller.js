@@ -288,7 +288,9 @@ module.exports.PostUpdate = async (req, res, next) => {
 module.exports.UserPosts = async (req, res, next) => {
   try {
     console.log(req.session.user);
-    const userPosts = await Post.find({ author: req.session.user._id }).lean();
+    const userPosts = await Post.find({ author: req.session.user._id }).populate('author', '_id firstName lastName')
+    .lean()
+    .exec();
     console.log(userPosts);
     res.status(200).json(userPosts);
   } catch (error) {
