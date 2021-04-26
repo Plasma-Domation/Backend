@@ -33,43 +33,43 @@ module.exports.sendOTP = async (req, res, next) => {
         console.log(newOTPobj);
         otpToSend = newOTPobj.otp;
       }
-      // const oAuth2Client = new google.auth.OAuth2(
-      //   process.env.CLIENT_ID,
-      //   process.env.CLEINT_SECRET,
-      //   process.env.REDIRECT_URI
-      // );
-      // oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
-      // const accessToken = await oAuth2Client.getAccessToken();
+      const oAuth2Client = new google.auth.OAuth2(
+        process.env.CLIENT_ID,
+        process.env.CLEINT_SECRET,
+        process.env.REDIRECT_URI
+      );
+      oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
+      const accessToken = await oAuth2Client.getAccessToken();
 
-      // const transport = nodemailer.createTransport({
-      //   service: 'gmail',
-      //   auth: {
-      //     type: 'OAuth2',
-      //     user: process.env.EMAIL_FROM,
-      //     clientId: process.env.CLIENT_ID,
-      //     clientSecret: process.env.CLEINT_SECRET,
-      //     refreshToken: process.env.REFRESH_TOKEN,
-      //     accessToken: accessToken,
-      //   },
-      // });
+      const transport = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          type: 'OAuth2',
+          user: process.env.EMAIL_FROM,
+          clientId: process.env.CLIENT_ID,
+          clientSecret: process.env.CLEINT_SECRET,
+          refreshToken: process.env.REFRESH_TOKEN,
+          accessToken: accessToken,
+        },
+      });
 
-      // const mailOptions = {
-      //   from: `Plasma Donation 🧁 <${process.env.EMAIL_FROM}>`,
-      //   to: `${email}`,
-      //   subject: 'Get your email verified',
-      //   text: `Your OTP is: ${otpToSend}`,
-      //   html: `<h1>Your OTP is: ${otpToSend}</h1>`,
-      // };
+      const mailOptions = {
+        from: `Plasma Donation 🧁 <${process.env.EMAIL_FROM}>`,
+        to: `${email}`,
+        subject: 'Get your email verified',
+        text: `Your OTP is: ${otpToSend}`,
+        html: `<h1>Your OTP is: ${otpToSend}</h1>`,
+      };
 
-      // transport.sendMail(mailOptions, function (error, info) {
-      //   if (error) {
-      //     console.log(error);
-      //     return res.status(400).json(error);
-      //   } else {
-      //     console.log('Email sent: ' + info.response);
-      //     res.status(200).send('Email sent: ' + info.response);
-      //   }
-      // });
+      transport.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+          return res.status(400).json(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+          res.status(200).send('Email sent: ' + info.response);
+        }
+      });
 
       res.status(201).send(otpToSend);
       // res.status(201).json("Email sent!!");
