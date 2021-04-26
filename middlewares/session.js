@@ -30,11 +30,11 @@ module.exports = session({
   unset: 'destroy',
   name: 'sessionId',
   cookie: {
-    secure: false, // if true: only transmit cookie over https
+    secure: true, // if true: only transmit cookie over https
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 7,
     sameSite: 'none',
     path: '/',
-    domain: ['localhost:3000',"ontan.netlify.app" ]
+    // domain: 'http://localhost:3000'
   },
 });

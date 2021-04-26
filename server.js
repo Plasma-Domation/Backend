@@ -16,9 +16,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 // app.options('*', cors);
+app.set('trust proxy', 1);
+
+
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'https://ontan.netlify.app'],
+    origin: 'http://localhost:3000',
     credentials: true,
     exposedHeaders: ['set-cookie'],
   })
