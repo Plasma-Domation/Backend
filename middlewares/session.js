@@ -3,7 +3,7 @@ require('dotenv').config({ path: './config/config.env' });
 const MongoDBStore = require('connect-mongodb-session')(session);
 
 const store = new MongoDBStore({
-  uri: process.env.MONGODB_URI,
+  uri: process.env.MONGODB_SESSION_URI,
   collection: 'sessions',
 
   expires: 1000 * 60 * 60 * 24 * 30, // by default its 2 week
