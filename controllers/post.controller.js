@@ -128,6 +128,7 @@ module.exports.PostCreate = async (req, res, next) => {
       newPost.blood_group = Blood[blood_group];
       newPost.gender = Genders[gender];
       await newPost.save();
+      req.session.user = theUser;
       return res.status(201).json({ newPost });
     }
   } catch (error) {
