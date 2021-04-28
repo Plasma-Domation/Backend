@@ -18,13 +18,13 @@ exports.validCreate = [
     .withMessage('Enter valid pin code for this state'),
   check('firstName', 'First Name is required')
     .isLength({
-      min: 3,
+      min: 2,
       max: 32,
     })
     .withMessage('First Name must be between 3 to 32 characters'),
   check('lastName', 'Last Name is required')
     .isLength({
-      min: 3,
+      min: 2,
       max: 32,
     })
     .withMessage('Last Name must be between 3 to 32 characters'),
