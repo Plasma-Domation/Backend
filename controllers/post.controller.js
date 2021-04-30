@@ -38,6 +38,7 @@ module.exports.PostList = async (req, res, next) => {
     const posts = await Post.find(obj)
       .limit(limit)
       .skip(startIndex)
+      .sort({createdAt:-1})
       // .populate('author', '_id')
       .lean()
       .exec();
@@ -123,7 +124,7 @@ module.exports.PostCreate = async (req, res, next) => {
         Covid_Recovery_Date,
         author: theUser._id,
         firstName,
-        lastName
+        lastName,
       });
       newPost.blood_group = Blood[blood_group];
       newPost.gender = Genders[gender];
